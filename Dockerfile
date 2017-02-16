@@ -22,7 +22,7 @@ RUN R -e "install.packages(c('leaflet', 'RColorBrewer', 'scales', 'lattice', 'dp
 
 # copy the app to the image
 RUN mkdir /root/superzip
-COPY euler /root/superzip
+COPY superzip /root/superzip
 
 COPY Rprofile.site /usr/lib/R/etc/
 
