@@ -1,6 +1,6 @@
 # shiny-leaflet-superzip-example
 
-Example container template for use with Docker and ShinyProxy
+Example container template for use with Docker and ShinyProxy. Shows a Leaflet map and two plots.
 
 ## Setup
 
