@@ -34,6 +34,15 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
+Start ShinyProxy
+
+```
+java -jar shinyproxy-0.8.4.jar
+```
+
+Test at: `http://localhost:8080`
+
+
 See also: 
 
 * https://github.com/rstudio/shiny-examples/tree/master/063-superzip-example
