@@ -27,13 +27,6 @@ Edit application.yml to add a section like:
     groups: scientists
 ```
 
-Reload configuration and restart docker:
-
-```
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-```
-
 Start ShinyProxy
 
 ```
