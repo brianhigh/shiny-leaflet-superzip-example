@@ -12,3 +12,4 @@ cp -R shiny-examples/063-superzip-example shiny-leaflet-superzip-example/superzi
 
 cd shiny-leaflet-superzip-example/
 [ -f Dockerfile.patch ] && patch -p0 < Dockerfile.patch
+
