@@ -766,11 +766,11 @@ https://docs.docker.com/docker-for-mac/install/
 3. Once you have opened the DMG file and dragged the Docker app to your
 Applications folder, run the Docker app to start Docker.
 4. In Terminal, run the commands to build the docker image if you have not already done so:
-    ```
-        git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
-        cd shiny-leaflet-superzip-example
-        docker build -t brianhigh/shiny-leaflet-superzip-example .
-    ```
+```
+git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
+cd shiny-leaflet-superzip-example
+docker build -t brianhigh/shiny-leaflet-superzip-example .
+```
 5. You can view the progress of the build in Terminal.
 **NOTE**: When complete, the container created during this operation
 will close. That’s okay.
@@ -781,6 +781,6 @@ it at: http://localhost:3838/
 7. You can stop your container when you are finished using it. Get a
 list of running containers and stop your container using its ID or NAME.
 ```
-    docker ps
-    docker stop 
+docker ps
+docker stop 
 ```
