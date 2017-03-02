@@ -761,8 +761,7 @@ The following instructions apply to Docker for Mac only.
 have Git, then [download and
 install](https://git-scm.com/book/en/v1/Getting-Started-Installing-Git#Installing-on-Mac)
 it.
-2. Install Docker for Mac (stable) from:
-https://docs.docker.com/docker-for-mac/install/
+2. Install Docker for Mac (stable) from: https://docs.docker.com/docker-for-mac/install/
 3. Once you have opened the DMG file and dragged the Docker app to your
 Applications folder, run the Docker app to start Docker.
 4. In Terminal, run the commands to build the docker image if you have not already done so:
@@ -775,7 +774,9 @@ docker build -t brianhigh/shiny-leaflet-superzip-example .
 **NOTE**: When complete, the container created during this operation
 will close. That’s okay.
 6. You can start your container manually and access your app directly:
-    docker run -d -p 3838:3838 brianhigh/shiny-leaflet-superzip-example
+```
+docker run -d -p 3838:3838 brianhigh/shiny-leaflet-superzip-example
+```
 **NOTE**: It will take a minute to boot. When it’s ready, you can reach
 it at: http://localhost:3838/
 7. You can stop your container when you are finished using it. Get a
