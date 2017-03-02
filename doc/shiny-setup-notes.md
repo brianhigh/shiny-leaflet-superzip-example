@@ -332,7 +332,7 @@ Log rotation
 
 The ShinyProxy log is verbose, so you will want to rotate it.
 
-Create /etc/logrotate.d/shinyproxy:
+Create `/etc/logrotate.d/shinyproxy`:
 
     /usr/local/shinyproxy/*.log {
             daily
@@ -416,7 +416,7 @@ docker-machine --storage-path /c/docker/machine start dev
 ### Docker setup in DOS
 
 Set your PATH and create the “dev” machine. (We will *not* use the
-default machine storage path since that is in the Windows profile
+default machine storage path since that is in the Windows *profile*
 folder.)
 
 ```
@@ -429,7 +429,7 @@ docker-machine --storage-path c:\docker\machine ls
 docker-machine --storage-path c:\docker\machine env dev
 ```
 
-Run the commands shown with “env”. Note the address and port number for
+Run the commands shown with `env`. Note the address and port number for
 the machine. You will need it later.
 
 Later, if you want to start your machine after you have shut it down or
@@ -442,7 +442,7 @@ docker-machine --storage-path c:\docker\machine start dev
 ### Configure ShinyProxy:
 
 In [application.yml](http://www.shinyproxy.io/configuration/), modify
-“docker” section for the settings shown with “env” command above.
+“docker” section for the settings shown with `env` command above.
 
         docker:
           cert-path: C:\docker\machine\machines\dev
@@ -484,7 +484,7 @@ This configuration can work whether you are using Bash on Windows or
 DOS. Again, you need to make sure “url” and “host” match your docker
 machine. (See above.)
 
-Edit as needed to match your “env”. It needs to be in the same folder as
+Edit as needed to match your `env`. It needs to be in the same folder as
 the ShinyProxy jar file.
 
 ### Build your image
@@ -526,7 +526,7 @@ Open your web browser on your Windows machine to: http://192.168.99.1:8080
 2.  You can also look here for help:
     http://www.shinyproxy.io/troubleshooting/
 3.  It is possible that you container is not configured properly. Check
-    the application.yml, Dockerfile and Rprofile.site files.
+    the `application.yml`, `Dockerfile` and `Rprofile.site` files.
 4.  You can run your container manually to see more messages.
 
 #### How to run your container manually
@@ -765,13 +765,12 @@ it.
 https://docs.docker.com/docker-for-mac/install/
 3. Once you have opened the DMG file and dragged the Docker app to your
 Applications folder, run the Docker app to start Docker.
-4. In Terminal, run the commands to build the docker image if you have
-not already done so:
-```
-    git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
-    cd shiny-leaflet-superzip-example
-    docker build -t brianhigh/shiny-leaflet-superzip-example .
-```
+4. In Terminal, run the commands to build the docker image if you have not already done so:
+    ```
+        git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
+        cd shiny-leaflet-superzip-example
+        docker build -t brianhigh/shiny-leaflet-superzip-example .
+    ```
 5. You can view the progress of the build in Terminal.
 **NOTE**: When complete, the container created during this operation
 will close. That’s okay.
