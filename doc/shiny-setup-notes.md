@@ -31,8 +31,10 @@ Install Java 8
 If you don’t have [Java](https://www.java.com/en/) 8, install it. Check
 that the version is correct.
 
-    sudo apt install openjdk-8-jre-headless
-    java -version
+```
+sudo apt install openjdk-8-jre-headless
+java -version
+```
 
 The next few steps are based on the [Docker installation
 documentation](https://docs.docker.com/engine/installation/linux/).
@@ -42,61 +44,73 @@ Check Kernel Version
 
 Make sure you have linux kernel 3.10 or higher on a 64 bit system.
 
-    uname -r
+```
+uname -r
+```
 
 Install Docker
 --------------
 
 We will pull updates from Docker’s repo for Ubuntu Xenial (16.04 LTS).
 
-    sudo apt install apt-transport-https ca-certificates
-    sudo apt-key adv \
-       --keyserver hkp://ha.pool.sks-keyservers.net:80 \
-       --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+```
+sudo apt install apt-transport-https ca-certificates
+sudo apt-key adv \
+   --keyserver hkp://ha.pool.sks-keyservers.net:80 \
+   --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-    sudo bash -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' >> /etc/apt/sources.list"
+sudo bash -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' >> /etc/apt/sources.list"
 
-    sudo apt update
-    apt-cache policy docker-engine
-    sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
-    sudo apt-get install docker-engine
+sudo apt update
+apt-cache policy docker-engine
+sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+sudo apt-get install docker-engine
+```
 
 Start Docker
 ------------
 
 Start Docker and make sure it is running.
 
-    sudo service docker start
-    sudo docker run hello-world
-    sudo service docker status
+```
+sudo service docker start
+sudo docker run hello-world
+sudo service docker status
+```
 
 Configure Docker for ShinyProxy demo
 ------------------------------------
 
 Configure Docker and check the status.
 
-    sudo bash -c "perl -pi -e \
-       's~^(ExecStart=/usr/bin/dockerd -H fd://).*$~$1 -D -H tcp://0.0.0.0:2375~g' \
-       /lib/systemd/system/docker.service"
-    # That should create a line like:
-    #ExecStart=/usr/bin/docker daemon -H fd:// -D -H tcp://0.0.0.0:2375
+```
+sudo bash -c "perl -pi -e \
+    's~^(ExecStart=/usr/bin/dockerd -H fd://).*$~$1 -D -H tcp://0.0.0.0:2375~g' \
+    /lib/systemd/system/docker.service"
+# That should create a line like:
+#ExecStart=/usr/bin/docker daemon -H fd:// -D -H tcp://0.0.0.0:2375
 
-    sudo systemctl daemon-reload
-    sudo systemctl restart docker
-    sudo systemctl status docker.service
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+sudo systemctl status docker.service
+```
 
 Get the demo
 ------------
 
-    sudo docker pull openanalytics/shinyproxy-demo
-    sudo docker images | grep shinyproxy
+```
+sudo docker pull openanalytics/shinyproxy-demo
+sudo docker images | grep shinyproxy
+```
 
 Download ShinyProxy
 -------------------
 
-    mkdir shinyproxy
-    cd shinyproxy
-    wget 'http://www.shinyproxy.io/downloads/shinyproxy-0.8.0.jar'
+```
+mkdir shinyproxy
+cd shinyproxy
+wget 'http://www.shinyproxy.io/downloads/shinyproxy-0.8.0.jar'
+```
 
 Configure ShinyProxy
 --------------------
@@ -106,24 +120,31 @@ Get the sample yaml file contents from the ShinyProxy
 Paste it into a new file in the same folder that ShinyProxy was
 downloaded to. Edit the file with a \`perl\` command.
 
-    perl -pi -e 's/^(authentication:) .*$/$1 none/g' application.yml
+```
+perl -pi -e 's/^(authentication:) .*$/$1 none/g' application.yml
+```
 
 To test with the default “simple” accounts (“jack” and “jeff”), edit
-“application.yml” and change:
+`application.yml` and change:
 
-    authentication: ldap
+```
+authentication: ldap
+```
 
 To:
 
-    authentication: simple
+```
+authentication: simple
+```
 
 Run ShinyProxy
 --------------
 
-    java -jar shinyproxy-0.8.4.jar
+```
+java -jar shinyproxy-0.8.4.jar
+```
 
-You should see two Shiny apps listed at:
-[http://localhost:8080](http://localhost:8080)
+You should see two Shiny apps listed at: [http://localhost:8080](http://localhost:8080)
 
 Test them. They should both work. “jack” has access to both apps. “jeff”
 has access to only one.
@@ -138,14 +159,17 @@ And: [ShinyProxy Security](http://www.shinyproxy.io/security/)
 To have a custom logo.png that is served from your https server, you can
 create a html folder:
 
-    sudo cp -R /usr/share/nginx/html /usr/local/nginx/
+```
+sudo cp -R /usr/share/nginx/html /usr/local/nginx/
+```
 
 And create a static folder:
 
-    sudo mkdir /usr/local/nginx/html/static
+```
+sudo mkdir /usr/local/nginx/html/static
+```
 
-And use this Nginx configuration file
-(/etc/nginx/conf.d/shiny\_http2.conf):
+And use this Nginx configuration file (/etc/nginx/conf.d/shiny\_http2.conf):
 
     server {
       listen                80;
@@ -197,37 +221,45 @@ And use this Nginx configuration file
 
     }
 
-Now you can place a custom “logo.png” image file here:
-/usr/local/nginx/html/static/logo.png
+Now you can place a custom `logo.png` image file here:
+`/usr/local/nginx/html/static/logo.png`.
 
-And you can reference that image file in your “application.yml” file as:
+And you can reference that image file in your `application.yml` file as:
 
-    logo-url: https://shiny.example.com/static/logo.png
+```
+logo-url: https://shiny.example.com/static/logo.png
+```
 
 Configure ShinyProxy to run as a Systemd Service
 ------------------------------------------------
 
 Create a ShinyProxy user:
 
-    sudo adduser --system --home /usr/local/shinyproxy shinyproxy
+```
+sudo adduser --system --home /usr/local/shinyproxy shinyproxy
+```
 
-Copy “shinyproxy-0.8.4.jar” (or whichever filename your jar file has)
-and “application.yml” to “/usr/local/shinyproxy” and make “shinyproxy”
-the owner of these files with “chown”.
+Copy `shinyproxy-0.8.4.jar` (or whichever filename your jar file has)
+and `application.yml` to `/usr/local/shinyproxy` and make `shinyproxy`
+the owner of these files with `chown`.
 
-Create a file “/usr/local/shinyproxy/start\_shinyproxy.sh” containing:
+Create a file `/usr/local/shinyproxy/start_shinyproxy.sh` containing:
 
-    #!/bin/sh
+```
+#!/bin/sh
 
-    cd /usr/local/shinyproxy
-    java -jar /usr/local/shinyproxy/shinyproxy-0.8.4.jar
+cd /usr/local/shinyproxy
+java -jar /usr/local/shinyproxy/shinyproxy-0.8.4.jar
+```
 
 Set the permissions as follows:
 
-    sudo chown shinyproxy start_shinyproxy.sh
-    sudo chmod 700 start_shinyproxy.sh
+```
+sudo chown shinyproxy start_shinyproxy.sh
+sudo chmod 700 start_shinyproxy.sh
+```
 
-Create a service file “/lib/systemd/system/shinyproxy.service”
+Create a service file `/lib/systemd/system/shinyproxy.service`
 containing:
 
     [Unit]
@@ -241,8 +273,10 @@ containing:
 
 Start the service:
 
-    sudo systemctl daemon-reload
-    sudo systemctl start shinyproxy
+```
+sudo systemctl daemon-reload
+sudo systemctl start shinyproxy
+```
 
 Test the service (e.g., on http://localhost:8080 or equivalent).
 
@@ -261,27 +295,33 @@ https://github.com/brianhigh/shiny-leaflet-superzip-example
 example from the two source repos.)
 
 Here is how you can use this git repo to create a Docker image:
+
 ```
-    git clone 'https://github.com/brianhigh/shiny-leaflet-superzip-example.git'
-    cd shiny-leaflet-superzip-example
-    sudo docker build -t brianhigh/shiny-leaflet-superzip-example .
+git clone 'https://github.com/brianhigh/shiny-leaflet-superzip-example.git'
+cd shiny-leaflet-superzip-example
+sudo docker build -t brianhigh/shiny-leaflet-superzip-example .
 ```
+
 Then you need to add this app to ShinyProxy:
+
 ```
-    sudo vim /usr/local/shinyproxy/application.yml # Add a section for the app
+sudo vim /usr/local/shinyproxy/application.yml # Add a section for the app
 ```
+
 The section you need to add to the “application.yml” should look like:
-```
+
     - name: superzip
         display-name: Superzip Example
         docker-cmd: ["R", "-e shiny::runApp('/root/superzip')"]
         docker-image: brianhigh/shiny-leaflet-superzip-example
         groups: scientists
-```
+
 Next, you can restart the shinyproxy service.
+
 ```
-    sudo systemctl restart shinyproxy
+sudo systemctl restart shinyproxy
 ```
+
 Now, when you go to your ShinyProxy website, you will see a link:
 “Superzip Example”.
 
@@ -293,7 +333,7 @@ Log rotation
 The ShinyProxy log is verbose, so you will want to rotate it.
 
 Create /etc/logrotate.d/shinyproxy:
-```
+
     /usr/local/shinyproxy/*.log {
             daily
             missingok
@@ -306,12 +346,14 @@ Create /etc/logrotate.d/shinyproxy:
             postrotate
             endscript
     }
-```
+
 You may also wish to add a link to this log file so it will be easy to
 find.
+
 ```
-    sudo ln -s /usr/local/shinyproxy/shinyproxy.log /var/log/shinyproxy.log
+sudo ln -s /usr/local/shinyproxy/shinyproxy.log /var/log/shinyproxy.log
 ```
+
 ShinyProxy App Development in Windows Environments using Docker Toolbox
 -----------------------------------------------------------------------
 
@@ -352,60 +394,68 @@ suit your situation.
 Set your PATH and create the “dev” machine. (We will *not* use the
 default machine storage path since that is in the Windows *profile*
 folder.)
-```
-    export PATH=/c/Program\ Files/Oracle\ VM\ VirtualBox:/c/Program\ Files/Docker\ Toolbox:/c/Program\ Files/Java/jre1.8.0_101/bin:$PATH
 
-    mkdir –p /c/docker/machine
-    docker-machine --storage-path /c/docker/machine create -d virtualbox dev
-    docker-machine --storage-path /c/docker/machine ls
-    docker-machine --storage-path /c/docker/machine env dev
 ```
-Run the commands shown with “env”.
+export PATH=/c/Program\ Files/Oracle\ VM\ VirtualBox:/c/Program\ Files/Docker\ Toolbox:/c/Program\ Files/Java/jre1.8.0_101/bin:$PATH
+
+mkdir –p /c/docker/machine
+docker-machine --storage-path /c/docker/machine create -d virtualbox dev
+docker-machine --storage-path /c/docker/machine ls
+docker-machine --storage-path /c/docker/machine env dev
+```
+
+Run the commands shown with `env`.
 
 Later, if you want to start your machine after you have shut it down or
 rebooted, you can run this command:
+
 ```
-    docker-machine --storage-path /c/docker/machine start dev
+docker-machine --storage-path /c/docker/machine start dev
 ```
+
 ### Docker setup in DOS
 
 Set your PATH and create the “dev” machine. (We will *not* use the
 default machine storage path since that is in the Windows profile
 folder.)
-```
-    set PATH=C:\Program Files\Oracle VM VirtualBox;C:\Program Files\Docker Toolbox;C:\Program Files\Java\jre1.8.0_101\bin;%PATH%
 
-    mkdir c:\docker
-    mkdir c:\docker\machine
-    docker-machine --storage-path c:\docker\machine create -d virtualbox dev
-    docker-machine --storage-path c:\docker\machine ls
-    docker-machine --storage-path c:\docker\machine env dev
 ```
+set PATH=C:\Program Files\Oracle VM VirtualBox;C:\Program Files\Docker Toolbox;C:\Program Files\Java\jre1.8.0_101\bin;%PATH%
+
+mkdir c:\docker
+mkdir c:\docker\machine
+docker-machine --storage-path c:\docker\machine create -d virtualbox dev
+docker-machine --storage-path c:\docker\machine ls
+docker-machine --storage-path c:\docker\machine env dev
+```
+
 Run the commands shown with “env”. Note the address and port number for
 the machine. You will need it later.
 
 Later, if you want to start your machine after you have shut it down or
 rebooted, you can run this command:
+
 ```
-    docker-machine --storage-path c:\docker\machine start dev
+docker-machine --storage-path c:\docker\machine start dev
 ```
+
 ### Configure ShinyProxy:
 
 In [application.yml](http://www.shinyproxy.io/configuration/), modify
 “docker” section for the settings shown with “env” command above.
-```
+
         docker:
           cert-path: C:\docker\machine\machines\dev
           url: https://192.168.99.100:2376
           host: 192.168.99.100
           port-range-start: 20000
-```
+
 This configuration can work whether you are using Bash on Windows or
 DOS. The address in the “url” and “host” settings need to match those as
 shown with “docker-machine […] ls” and “docker-machine […] env”.
 
 Here is a complete, working example of a “application.yml” file:
-```
+
     shiny:
       proxy:
         title: Shiny Proxy [Development]
@@ -429,7 +479,7 @@ Here is a complete, working example of a “application.yml” file:
     logging:
       file:
         shinyproxy.log
-```
+
 This configuration can work whether you are using Bash on Windows or
 DOS. Again, you need to make sure “url” and “host” match your docker
 machine. (See above.)
@@ -440,15 +490,19 @@ the ShinyProxy jar file.
 ### Build your image
 
 Here is a working example of building a Docker image from a Git repo.
+
 ```
-    git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
-    cd shiny-leaflet-superzip-example
-    docker build -t brianhigh/shiny-leaflet-superzip-example .
+git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
+cd shiny-leaflet-superzip-example
+docker build -t brianhigh/shiny-leaflet-superzip-example .
 ```
+
 Check to see if it is running:
+
 ```
-    docker ps
+docker ps
 ```
+
 Later when you use this app, ShinyProxy can start the Docker container
 for you.
 
@@ -456,9 +510,11 @@ for you.
 
 You will need to get a copy of
 [ShinyProxy](http://www.shinyproxy.io/downloads/) and run it from java.
+
 ```
-    java -jar shinyproxy-0.8.4.jar
+java -jar shinyproxy-0.8.4.jar
 ```
+
 ### Test your app
 
 Open your web browser on your Windows machine to: http://192.168.99.1:8080
@@ -477,15 +533,19 @@ Open your web browser on your Windows machine to: http://192.168.99.1:8080
 
 For this to work, you will need to have set up your shell environment as
 explained when you run (DOS):
+
 ```
-    docker-machine --storage-path c:\docker\machine env dev
+docker-machine --storage-path c:\docker\machine env dev
 ```
+
 Now you can run the container manually:
+
 ```
-    docker run -p 3838:3838 brianhigh/shiny-leaflet-superzip-example R -e "shiny::runApp('/root/superzip')"
+docker run -p 3838:3838 brianhigh/shiny-leaflet-superzip-example R -e "shiny::runApp('/root/superzip')"
 ```
+
 Then you might see output like this:
-```
+
     R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
     Copyright (C) 2016 The R Foundation for Statistical Computing
     Platform: x86_64-pc-linux-gnu (64-bit)
@@ -519,40 +579,50 @@ Then you might see output like this:
 
 
     Listening on http://0.0.0.0:3838
-```
+
 If there were errors about packages that were missing or could not load,
 you could investigate and correct those problems.
 
 You can close this container with Ctrl-C then run this:
+
 ```
-    docker ps
+docker ps
 ```
+
 From that output, you will see a list of open containers. Close your
 container with:
+
 ```
-    docker stop 
+docker stop 
 ```
+
 For example:
+
 ```
-    docker ps
+docker ps
+```
 
     CONTAINER ID        IMAGE                                      COMMAND                 [...]
     1e758bcec430        brianhigh/shiny-leaflet-superzip-example   "R -e shiny::runAp..."  [...]
 
     docker stop 1e758bcec430
-```
+
 ### When you are done using your docker machine
 
 You can stop ShinyProxy with Ctrl-C.
 
 Then you can stop your Docker machine with (Bash):
+
 ```
-    docker-machine --storage-path /c/docker/machine stop dev
+docker-machine --storage-path /c/docker/machine stop dev
 ```
+
 Or (DOS or PowerShell):
+
 ```
-    docker-machine --storage-path c:\docker\machine stop dev
+docker-machine --storage-path c:\docker\machine stop dev
 ```
+
 Later, when you want to work with this machine again, you can just
 restart it, update your app if needed, and run the ShinyProxy jar file.
 
