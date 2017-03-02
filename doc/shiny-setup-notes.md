@@ -152,9 +152,8 @@ has access to only one.
 Set up Nginx as web application proxy
 -------------------------------------
 
-See: [[Nginx as web application proxy]]
-
-And: [ShinyProxy Security](http://www.shinyproxy.io/security/)
+(You will want to refer to other documentation on how to setup Nginx. There are
+a number of suitable tutorials online.)
 
 To have a custom logo.png that is served from your https server, you can
 create a html folder:
