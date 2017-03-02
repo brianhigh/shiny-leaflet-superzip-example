@@ -261,27 +261,27 @@ https://github.com/brianhigh/shiny-leaflet-superzip-example
 example from the two source repos.)
 
 Here is how you can use this git repo to create a Docker image:
-
+```
     git clone 'https://github.com/brianhigh/shiny-leaflet-superzip-example.git'
     cd shiny-leaflet-superzip-example
     sudo docker build -t brianhigh/shiny-leaflet-superzip-example .
-
+```
 Then you need to add this app to ShinyProxy:
-
+```
     sudo vim /usr/local/shinyproxy/application.yml # Add a section for the app
-
+```
 The section you need to add to the “application.yml” should look like:
-
+```
     - name: superzip
         display-name: Superzip Example
         docker-cmd: ["R", "-e shiny::runApp('/root/superzip')"]
         docker-image: brianhigh/shiny-leaflet-superzip-example
         groups: scientists
-
+```
 Next, you can restart the shinyproxy service.
-
+```
     sudo systemctl restart shinyproxy
-
+```
 Now, when you go to your ShinyProxy website, you will see a link:
 “Superzip Example”.
 
@@ -293,7 +293,7 @@ Log rotation
 The ShinyProxy log is verbose, so you will want to rotate it.
 
 Create /etc/logrotate.d/shinyproxy:
-
+```
     /usr/local/shinyproxy/*.log {
             daily
             missingok
@@ -306,12 +306,12 @@ Create /etc/logrotate.d/shinyproxy:
             postrotate
             endscript
     }
-
+```
 You may also wish to add a link to this log file so it will be easy to
 find.
-
+```
     sudo ln -s /usr/local/shinyproxy/shinyproxy.log /var/log/shinyproxy.log
-
+```
 ShinyProxy App Development in Windows Environments using Docker Toolbox
 -----------------------------------------------------------------------
 
@@ -352,27 +352,27 @@ suit your situation.
 Set your PATH and create the “dev” machine. (We will *not* use the
 default machine storage path since that is in the Windows *profile*
 folder.)
-
+```
     export PATH=/c/Program\ Files/Oracle\ VM\ VirtualBox:/c/Program\ Files/Docker\ Toolbox:/c/Program\ Files/Java/jre1.8.0_101/bin:$PATH
 
     mkdir –p /c/docker/machine
     docker-machine --storage-path /c/docker/machine create -d virtualbox dev
     docker-machine --storage-path /c/docker/machine ls
     docker-machine --storage-path /c/docker/machine env dev
-
+```
 Run the commands shown with “env”.
 
 Later, if you want to start your machine after you have shut it down or
 rebooted, you can run this command:
-
+```
     docker-machine --storage-path /c/docker/machine start dev
-
+```
 ### Docker setup in DOS
 
 Set your PATH and create the “dev” machine. (We will *not* use the
 default machine storage path since that is in the Windows profile
 folder.)
-
+```
     set PATH=C:\Program Files\Oracle VM VirtualBox;C:\Program Files\Docker Toolbox;C:\Program Files\Java\jre1.8.0_101\bin;%PATH%
 
     mkdir c:\docker
@@ -380,32 +380,32 @@ folder.)
     docker-machine --storage-path c:\docker\machine create -d virtualbox dev
     docker-machine --storage-path c:\docker\machine ls
     docker-machine --storage-path c:\docker\machine env dev
-
+```
 Run the commands shown with “env”. Note the address and port number for
 the machine. You will need it later.
 
 Later, if you want to start your machine after you have shut it down or
 rebooted, you can run this command:
-
+```
     docker-machine --storage-path c:\docker\machine start dev
-
+```
 ### Configure ShinyProxy:
 
 In [application.yml](http://www.shinyproxy.io/configuration/), modify
 “docker” section for the settings shown with “env” command above.
-
+```
         docker:
           cert-path: C:\docker\machine\machines\dev
           url: https://192.168.99.100:2376
           host: 192.168.99.100
           port-range-start: 20000
-
+```
 This configuration can work whether you are using Bash on Windows or
 DOS. The address in the “url” and “host” settings need to match those as
 shown with “docker-machine […] ls” and “docker-machine […] env”.
 
 Here is a complete, working example of a “application.yml” file:
-
+```
     shiny:
       proxy:
         title: Shiny Proxy [Development]
@@ -426,11 +426,10 @@ Here is a complete, working example of a “application.yml” file:
         display-name: Superzip Example
         docker-cmd: ["R", "-e shiny::runApp('/root/superzip')"]
         docker-image: brianhigh/shiny-leaflet-superzip-example
-        groups: scientists
     logging:
       file:
         shinyproxy.log
-
+```
 This configuration can work whether you are using Bash on Windows or
 DOS. Again, you need to make sure “url” and “host” match your docker
 machine. (See above.)
@@ -441,15 +440,15 @@ the ShinyProxy jar file.
 ### Build your image
 
 Here is a working example of building a Docker image from a Git repo.
-
+```
     git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
     cd shiny-leaflet-superzip-example
     docker build -t brianhigh/shiny-leaflet-superzip-example .
-
+```
 Check to see if it is running:
-
+```
     docker ps
-
+```
 Later when you use this app, ShinyProxy can start the Docker container
 for you.
 
@@ -457,13 +456,12 @@ for you.
 
 You will need to get a copy of
 [ShinyProxy](http://www.shinyproxy.io/downloads/) and run it from java.
-
+```
     java -jar shinyproxy-0.8.4.jar
-
+```
 ### Test your app
 
-Open your web browser on your Windows machine to:
-http://192.168.99.1:8080
+Open your web browser on your Windows machine to: http://192.168.99.1:8080
 
 ### Troubleshooting
 
@@ -479,15 +477,15 @@ http://192.168.99.1:8080
 
 For this to work, you will need to have set up your shell environment as
 explained when you run (DOS):
-
+```
     docker-machine --storage-path c:\docker\machine env dev
-
+```
 Now you can run the container manually:
-
+```
     docker run -p 3838:3838 brianhigh/shiny-leaflet-superzip-example R -e "shiny::runApp('/root/superzip')"
-
+```
 Then you might see output like this:
-
+```
     R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
     Copyright (C) 2016 The R Foundation for Statistical Computing
     Platform: x86_64-pc-linux-gnu (64-bit)
@@ -521,40 +519,40 @@ Then you might see output like this:
 
 
     Listening on http://0.0.0.0:3838
-
+```
 If there were errors about packages that were missing or could not load,
 you could investigate and correct those problems.
 
 You can close this container with Ctrl-C then run this:
-
+```
     docker ps
-
+```
 From that output, you will see a list of open containers. Close your
 container with:
-
+```
     docker stop 
-
+```
 For example:
-
+```
     docker ps
 
     CONTAINER ID        IMAGE                                      COMMAND                 [...]
     1e758bcec430        brianhigh/shiny-leaflet-superzip-example   "R -e shiny::runAp..."  [...]
 
     docker stop 1e758bcec430
-
+```
 ### When you are done using your docker machine
 
 You can stop ShinyProxy with Ctrl-C.
 
 Then you can stop your Docker machine with (Bash):
-
+```
     docker-machine --storage-path /c/docker/machine stop dev
-
+```
 Or (DOS or PowerShell):
-
+```
     docker-machine --storage-path c:\docker\machine stop dev
-
+```
 Later, when you want to work with this machine again, you can just
 restart it, update your app if needed, and run the ShinyProxy jar file.
 
@@ -594,11 +592,11 @@ The following instructions apply to Docker for Windows only.
     pop-up telling you this.
 7.  Run the commands to build the docker image if you have not already
     done so:
-
+```
     git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
     cd shiny-leaflet-superzip-example
     docker build -t brianhigh/shiny-leaflet-superzip-example .
-
+```
 8. You can view the progress of the build in the console .
 
 **NOTE**: When complete, the container created during this operation
@@ -606,20 +604,20 @@ will close. That’s okay.
 
 9. You can start your container manually and access your app
     directly:
-
+```
     docker run -d -p 3838:3838
     brianhigh/shiny-leaflet-superzip-example
-
+```
 **NOTE**: It will take a minute to boot. When it’s ready, you can
 reach it at: http://localhost:3838/
 
 10. You can stop your container when you are finished using it. Get a
     list of running containers and stop your container using its ID or
     NAME.
-
+```
     docker ps
     docker stop <CONTAINER ID or NAME>
-
+```
 ### Notes for using ShinyProxy in Windows
 
 If you want to run your app through ShinyProxy, you can do so as
@@ -627,7 +625,7 @@ described in this section. Before proceeding, make sure that you can
 create and run your app from a Docker container as described above.
 
 1. Install Java, get ShinyProxy and the “application.yml” file:
-
+```
     shiny:
      proxy:
      title: Shiny Proxy 
@@ -651,15 +649,15 @@ create and run your app from a Docker container as described above.
     logging:
      file:
      shinyproxy.log
-
+```
 **NOTE**: This same file should work as-is on Ubuntu Linux, in case
 you want to test it on such a system.
 
 2. From the folder containing the ShinyProxy jar file and
     "application.yml" start ShinyProxy.
-
+```
     java -jar shinyproxy-0.8.4.jar
-
+```
 3. You should now be able to test ShinyProxy at: http://localhost:8080
 
 **NOTE**: The container for your app should be created from the
@@ -699,23 +697,21 @@ https://docs.docker.com/docker-for-mac/install/
 Applications folder, run the Docker app to start Docker.
 4. In Terminal, run the commands to build the docker image if you have
 not already done so:
-
+```
     git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
     cd shiny-leaflet-superzip-example
     docker build -t brianhigh/shiny-leaflet-superzip-example .
-
+```
 5. You can view the progress of the build in Terminal.
 **NOTE**: When complete, the container created during this operation
 will close. That’s okay.
 6. You can start your container manually and access your app directly:
-
     docker run -d -p 3838:3838 brianhigh/shiny-leaflet-superzip-example
-
 **NOTE**: It will take a minute to boot. When it’s ready, you can reach
 it at: http://localhost:3838/
 7. You can stop your container when you are finished using it. Get a
 list of running containers and stop your container using its ID or NAME.
-
+```
     docker ps
     docker stop 
-
+```
