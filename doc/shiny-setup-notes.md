@@ -594,30 +594,31 @@ The following instructions apply to Docker for Windows only.
     pop-up telling you this.
 7.  Run the commands to build the docker image if you have not already
     done so:
-```
-git clone
-https://github.com/brianhigh/shiny-leaflet-superzip-example.git
-cd shiny-leaflet-superzip-example
-docker build -t brianhigh/shiny-leaflet-superzip-example .
-```
-8. You can view the progress of the build in the console .\
-    **NOTE**: When complete, the container created during this operation
-    will close. That’s okay.
+
+    git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
+    cd shiny-leaflet-superzip-example
+    docker build -t brianhigh/shiny-leaflet-superzip-example .
+
+8. You can view the progress of the build in the console .
+
+**NOTE**: When complete, the container created during this operation
+will close. That’s okay.
+
 9. You can start your container manually and access your app
     directly:
-```
-docker run -d -p 3838:3838
-brianhigh/shiny-leaflet-superzip-example
-```
-    **NOTE**: It will take a minute to boot. When it’s ready, you can
-    reach it at: http://localhost:3838/
+
+    docker run -d -p 3838:3838
+    brianhigh/shiny-leaflet-superzip-example
+
+**NOTE**: It will take a minute to boot. When it’s ready, you can
+reach it at: http://localhost:3838/
+
 10. You can stop your container when you are finished using it. Get a
     list of running containers and stop your container using its ID or
     NAME.
-```
-docker ps
-docker stop <CONTAINER ID or NAME>
-```
+
+    docker ps
+    docker stop <CONTAINER ID or NAME>
 
 ### Notes for using ShinyProxy in Windows
 
@@ -626,7 +627,7 @@ described in this section. Before proceeding, make sure that you can
 create and run your app from a Docker container as described above.
 
 1. Install Java, get ShinyProxy and the “application.yml” file:
-    ```
+
     shiny:
      proxy:
      title: Shiny Proxy 
@@ -650,16 +651,17 @@ create and run your app from a Docker container as described above.
     logging:
      file:
      shinyproxy.log
-    ```
+
 **NOTE**: This same file should work as-is on Ubuntu Linux, in case
-you want to test it on such a system.\
+you want to test it on such a system.
+
 2. From the folder containing the ShinyProxy jar file and
     "application.yml" start ShinyProxy.
-```
-java -jar shinyproxy-0.8.4.jar
-```
-3. You should now be able to test ShinyProxy at:
-    http://localhost:8080
+
+    java -jar shinyproxy-0.8.4.jar
+
+3. You should now be able to test ShinyProxy at: http://localhost:8080
+
 **NOTE**: The container for your app should be created from the
 image and should start automatically. You do not need to create it
 and start it manually.
@@ -697,23 +699,23 @@ https://docs.docker.com/docker-for-mac/install/
 Applications folder, run the Docker app to start Docker.
 4. In Terminal, run the commands to build the docker image if you have
 not already done so:
-```
-git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
-cd shiny-leaflet-superzip-example
-docker build -t brianhigh/shiny-leaflet-superzip-example .
-```
+
+    git clone https://github.com/brianhigh/shiny-leaflet-superzip-example.git
+    cd shiny-leaflet-superzip-example
+    docker build -t brianhigh/shiny-leaflet-superzip-example .
+
 5. You can view the progress of the build in Terminal.
 **NOTE**: When complete, the container created during this operation
 will close. That’s okay.
 6. You can start your container manually and access your app directly:
-```
-docker run -d -p 3838:3838 brianhigh/shiny-leaflet-superzip-example
-```
+
+    docker run -d -p 3838:3838 brianhigh/shiny-leaflet-superzip-example
+
 **NOTE**: It will take a minute to boot. When it’s ready, you can reach
 it at: http://localhost:3838/
 7. You can stop your container when you are finished using it. Get a
 list of running containers and stop your container using its ID or NAME.
-```
-docker ps
-docker stop 
-```
+
+    docker ps
+    docker stop 
+
