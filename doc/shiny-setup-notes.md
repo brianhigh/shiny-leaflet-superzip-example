@@ -14,7 +14,7 @@ This tutorial is primarily based upon the
 Procedures were initially tested in Ubuntu 16.10 on a Thinkpad T400
 dual-core laptop with 3 GB of RAM. Then they were confirmed on an Ubuntu
 Server 16.04 LTS dual-core [virtual
-machine](https://shiny.deohs.washington.edu/) with 4 GB of RAM. Both
+machine](https://shiny.example.com/) with 4 GB of RAM. Both
 test environments were 64-bit.
 
 Toward the end of this document are additional instructions on how to
@@ -149,13 +149,13 @@ And use this Nginx configuration file
 
     server {
       listen                80;
-      server_name           shiny.deohs.washington.edu;
+      server_name           shiny.example.com;
       rewrite     ^(.*)     https://$server_name$1 permanent;
     }
 
     server {
       listen                443;
-      server_name           shiny.deohs.washington.edu;
+      server_name           shiny.example.com;
       access_log            /var/log/nginx/shinyproxy.access.log;
       error_log             /var/log/nginx/shinyproxy.error.log error;
 
@@ -202,7 +202,7 @@ Now you can place a custom “logo.png” image file here:
 
 And you can reference that image file in your “application.yml” file as:
 
-    logo-url: https://shiny.deohs.washington.edu/static/logo.png
+    logo-url: https://shiny.example.com/static/logo.png
 
 Configure ShinyProxy to run as a Systemd Service
 ------------------------------------------------
@@ -285,7 +285,7 @@ Next, you can restart the shinyproxy service.
 Now, when you go to your ShinyProxy website, you will see a link:
 “Superzip Example”.
 
-It points to: https://shiny.deohs.washington.edu/app/superzip
+It points to: https://shiny.example.com/app/superzip
 
 Log rotation
 ------------
@@ -318,7 +318,7 @@ ShinyProxy App Development in Windows Environments using Docker Toolbox
 You can do development in a Windows environment with Docker. This will
 allow you to test that your app will run in
 [ShinyProxy](http://www.shinyproxy.io/) before installing it on the
-[server](https://shiny.deohs.washington.edu/).
+[server](https://shiny.example.com/).
 
 If your Windows machine can run [Docker for
 Windows](https://docs.docker.com/docker-for-windows), then skip to the
@@ -564,7 +564,7 @@ ShinyProxy App Development in Windows Environments using Docker for Windows
 You can do Shiny app development in a Windows environment with Docker.
 This will allow you to test that your Shiny app will run in a Docker
 container on your computer before installing it on the
-[server](https://shiny.deohs.washington.edu/).
+[server](https://shiny.example.com/).
 
 If you system supports Docker for Windows, then use it (instead of
 Docker Toolbox). You must have Windows 10, 64-bit.
@@ -671,7 +671,7 @@ You can do Shiny app development on a Mac with [Docker for
 Mac](https://docs.docker.com/docker-for-mac/). This will allow you to
 test that your Shiny app will run on your computer in a Docker
 container before installing it on
-the server.
+the server (shiny.example.com).
 
 On your Mac, you must be running El Capitan or higher, 64-bit, and
 your kernel must support hypervisors.
