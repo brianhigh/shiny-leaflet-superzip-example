@@ -3,7 +3,7 @@ FROM openanalytics/r-base
 MAINTAINER Brian High "brianhigh@github.com"
 
 # system libraries of general use
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     pandoc \
     pandoc-citeproc \
@@ -12,10 +12,16 @@ RUN apt-get update && apt-get install -y \
     libxt-dev \
     libssl-dev \
     libssh2-1-dev \
-    libssl1.0.0
+    libssl1.1 \
+    libgdal-dev \
+    libproj-dev \
+    libgeos-dev \
+    libudunits2-dev \
+    netcdf-bin \
+    && rm -rf /var/lib/apt/lists/*
 
 # basic shiny functionality
-RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('shiny', 'rmarkdown'), dependencies = TRUE, repos='https://cloud.r-project.org/')"
 
 # install dependencies of the superzip app
 RUN R -e "install.packages(c('leaflet', 'RColorBrewer', 'scales', 'lattice', 'dplyr', 'DT'), repos='https://cloud.r-project.org/')"
