@@ -1,4 +1,4 @@
-FROM openanalytics/r-base
+FROM rocker/r-base
 
 MAINTAINER Brian High "brianhigh@github.com"
 
@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgeos-dev \
     libudunits2-dev \
     netcdf-bin \
+    libharfbuzz-dev \ 
+    libfribidi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # basic shiny functionality
