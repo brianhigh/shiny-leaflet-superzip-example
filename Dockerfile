@@ -6,7 +6,6 @@ MAINTAINER Brian High "brianhigh@github.com"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     pandoc \
-    pandoc-citeproc \
     libcurl4-gnutls-dev \
     libcairo2-dev \
     libxt-dev \
