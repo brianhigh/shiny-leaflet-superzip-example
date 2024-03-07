@@ -1,4 +1,4 @@
-FROM rocker/r-base
+FROM rocker/r-ubuntu
 
 MAINTAINER Brian High "brianhigh@github.com"
 
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxt-dev \
     libssl-dev \
     libssh2-1-dev \
-    libssl1.1 \
+    libssl3 \
     libgdal-dev \
     libproj-dev \
     libgeos-dev \
